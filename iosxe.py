@@ -44,6 +44,6 @@ class IosXe(object):
         return r.text
 
 if __name__ == "__main__":
-    rojter = IosXe('https://172.22.0.81:55443')
+    rojter = IosXe(settings.url)
     rojter.login('cisco', 'cisco')
     print rojter.get('/api/v1/global/host-name')

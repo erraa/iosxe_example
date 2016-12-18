@@ -7,7 +7,7 @@ import settings
 requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
 
 if __name__ == "__main__":
-    rojter = IosXe('https://172.22.0.81:55443')
+    rojter = IosXe(settings.url)
     rojter.login(settings.username, settings.password)
     print rojter.get('/api/v1/routing-svc/isis')
 
