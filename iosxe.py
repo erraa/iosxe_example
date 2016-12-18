@@ -26,15 +26,14 @@ class IosXe(object):
             headers['X-auth-token'] = self.token
 
         headers['Accept'] = 'application/json'
+        headers['Content-Type'] = 'application/json'
         if 'auth' in kwargs:
             auth = kwargs['auth']
             r = requests.post(self.url + uri, headers=headers, auth=auth, verify=self.verify)
             return r
-        r = requests.post(self.url + uri, headers=headers, verify=self.verify)
-        if r.status_code == 200:
-            return r.text
-        else:
-            return False
+        data = json.dumps(kwargs['data'])
+        r = requests.post(self.url + uri, data=data, headers=headers, verify=self.verify)
+        return r.text
 
     def get(self, uri, headers=None):
         if not headers:
@@ -42,12 +41,9 @@ class IosXe(object):
         headers['X-auth-token'] = self.token
         headers['Accept'] = 'application/json'
         r = requests.get(self.url + uri, headers=headers, verify=self.verify)
-        if r.status_code == 200:
-            return r.text
-        else:
-            return False
+        return r.text
 
 if __name__ == "__main__":
     rojter = IosXe('https://172.22.0.81:55443')
-    rojter.login(settings.username, settings.password)
+    rojter.login('cisco', 'cisco')
     print rojter.get('/api/v1/global/host-name')
